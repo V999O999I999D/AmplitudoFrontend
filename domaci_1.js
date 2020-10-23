@@ -1,3 +1,51 @@
+class Studenti {
+
+    constructor(studenti){
+        this.studenti = studenti;
+    }
+
+    sortByIndex() {
+        for(let i = 0; i < this.studenti.length-1; i++)
+            for(let j = i+1; j < this.studenti.length; j++)
+                if(this.studenti[i].index > this.studenti[j].index){
+                    let temp = this.studenti[i];
+                    this.studenti[i] = this.studenti[j];
+                    this.studenti[j] = temp;
+                }
+
+        return this.studenti;
+    };
+
+
+    filter(godinaStudija) {
+        let filteredArray = [];
+    
+        for(let i = 0; i < this.studenti.length; i++)
+            if(this.studenti[i].godinaStudija === godinaStudija)
+                filteredArray.push(this.studenti[i]);
+    
+        return filteredArray;
+    };
+
+    deleteOldestStudent() {
+        let result = [];
+        let oldest = 0, index = -1;
+    
+        for(let i = 0; i < this.studenti.length; i++)
+            if(this.studenti[i].godine > oldest){
+                oldest = this.studenti[i].godine;
+                index = i;
+            }
+    
+        for(let i = 0; i < this.studenti.length; i++)
+            if(i !== index)
+                result.push(this.studenti[i]);
+                
+        return result;
+    };
+}
+
+
 let studenti = [
     student1 = {
         id: 5,
@@ -45,66 +93,8 @@ let studenti = [
     },
 ]; 
 
-//-------------------------------------------------------------------------------------------------------------
 
-let sortByIndex = () => {
-    for(let i = 0; i < studenti.length-1; i++)
-        for(let j = i+1; j < studenti.length; j++)
-            if(studenti[i].index > studenti[j].index){
-                let temp = studenti[i];
-                studenti[i] = studenti[j];
-                studenti[j] = temp;
-            }
-    return studenti;
-};
+let studentiObjekat = new Studenti(studenti);
 
-//-------------------------------------------------------------------------------------------------------------
 
-const filter = (godinaStudija) => {
-    let filteredArray = [];
-
-    for(let i = 0; i < studenti.length; i++)
-        if(studenti[i].godinaStudija === godinaStudija)
-            filteredArray.push(studenti[i]);
-
-    return filteredArray;
-};
-
-//-------------------------------------------------------------------------------------------------------------
-
-const deleteOldestStudent = () => {
-    let result = [];
-    let oldest = 0, index = -1;
-
-    for(let i = 0; i < studenti.length; i++)
-        if(studenti[i].godine > oldest){
-            oldest = studenti[i].godine;
-            index = i;
-        }
-
-    for(let i = 0; i < studenti.length; i++)
-        if(i !== index)
-            result.push(studenti[i]);
-            
-    return result;
-};
-
-//-------------------------------------------------------------------------------------------------------------
-
-const addNewStudent = (id, index, ime, prezime, godine, fakultet, smjer, godinaStudija, adresa) => {
-    let newStudent = {
-        id: id,
-        index: index,
-        ime: ime,
-        prezime: prezime,
-        godine: godine,
-        fakultet: fakultet,
-        smjer: smjer,
-        godinaStudija: godinaStudija,
-        adresa: adresa
-    };
-    studenti.push(newStudent);
-};
-
-//-------------------------------------------------------------------------------------------------------------
-console.log(sortByIndex());
+console.log(studentiObjekat.deleteOldestStudent());
